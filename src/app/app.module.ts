@@ -17,7 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { CacheInterceptor } from './core/cache.interceptor';
+import { ErrorInterceptor } from './core/error.interceptor';
 import { ModalModule } from './shared/modal/modal.module';
 
 const MAT_MODULES = [
@@ -48,7 +48,7 @@ const MAT_MODULES = [
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
 })
 export class AppModule {}
