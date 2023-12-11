@@ -1,0 +1,13 @@
+<div class="modal">
+  <div class="modal-header">
+    {{ title }}
+    <span class="modal-close" (click)="closeModal()">X</span>
+  </div>
+  <div class="modal-content">
+    <ng-container *ngTemplateOutlet="templateRef; context: { $implicit: data }">
+    </ng-container>
+  </div>
+  <div class="modal-footer"></div>
+</div>
+
+<div class="modal-backdrop" (click)="closeModal()"></div>

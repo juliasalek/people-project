@@ -1,0 +1,88 @@
+<div class="people">
+  <div class="people-header">
+    <h1>{{ title }}</h1>
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        type="text"
+        [(ngModel)]="searchValue"
+        (ngModelChange)="search(searchValue)"
+      />
+    </mat-form-field>
+  </div>
+  <div class="people-table mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      recycleRows
+      (matSortChange)="sortPeople()"
+    >
+      <ng-container matColumnDef="name">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.name }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="height">
+        <th mat-header-cell *matHeaderCellDef>Height</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.height !== "unknown" ? element.height : " - " }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="mass">
+        <th mat-header-cell *matHeaderCellDef>Mass</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.mass !== "unknown" ? element.mass : " - " }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef>Created</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.created }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="edited">
+        <th mat-header-cell *matHeaderCellDef>Edited</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.edited }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="planetName">
+        <th mat-header-cell *matHeaderCellDef>Planet</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="showPlanet(modalTemplate, element)"
+          >
+            Show planet
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>
+
+<ng-template #modalTemplate let-planet>
+  <div class="planet-details">
+    <div>
+      Name: <span class="text--bold">{{ planet.name }}</span>
+    </div>
+    <div>
+      Diameter: <span class="text--bold">{{ planet.diameter }}</span>
+    </div>
+    <div>
+      Climate: <span class="text--bold">{{ planet.climate }}</span>
+    </div>
+    <div>
+      Population: <span class="text--bold">{{ planet.population }}</span>
+    </div>
+  </div>
+</ng-template>
