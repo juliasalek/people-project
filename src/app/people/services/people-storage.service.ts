@@ -12,12 +12,14 @@ export class PeopleStorageService {
   public readonly people$: Observable<Person[]> =
     this.peopleSubject$.asObservable();
   private peopleArr: Person[] = [];
+  private searchValue = '';
 
   constructor(private apiService: ApiService) {
     this.loadAllData();
   }
 
   public searchPeople(text: string): void {
+    this.searchValue = text;
     const sortedArr = filter(this.peopleArr, function (person) {
       return includes(toLower(person.name), toLower(text));
     });
@@ -31,7 +33,9 @@ export class PeopleStorageService {
         retry(2),
         expand((previousData) => {
           this.peopleArr = this.peopleArr.concat(previousData.results);
-          this.peopleSubject$.next(this.peopleArr);
+          this.searchValue
+            ? this.searchPeople(this.searchValue)
+            : this.peopleSubject$.next(this.peopleArr);
           return previousData.next
             ? this.apiService.getPeopleByUrl(previousData.next)
             : EMPTY;
